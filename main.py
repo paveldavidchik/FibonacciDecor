@@ -1,10 +1,11 @@
 
-from functools import lru_cache
+from functools import lru_cache, wraps
 import time
 
 
 def log(log_file='log.txt'):
     def decor(func):
+        @wraps(func)
         def fibonacci_log(n):
             result = func(n)
             with open(log_file, 'a') as f:
@@ -23,6 +24,7 @@ def fibonacci(n: int) -> int:
         return fibonacci(n - 2) + fibonacci(n - 1)
 
 
+print(fibonacci.__name__)
 start = time.time()
 print(list(fibonacci(n) for n in range(20)))
 end = time.time()
